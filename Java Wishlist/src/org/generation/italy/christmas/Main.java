@@ -1,6 +1,7 @@
 package org.generation.italy.christmas;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,23 +39,50 @@ public class Main {
 			}
 			
 			if (userChoice.equals("no")) {
+				System.out.println("------------------");
 				System.out.println("Ecco la tua wishlist completa: ");
-				wishlist.sort(String.CASE_INSENSITIVE_ORDER);
-				System.out.println(wishlist);
 				exit = true;
 			}
 			
 			if ( !userChoice.equals("si") && !userChoice.equals("no")) {
+				System.out.println("------------------");
 				System.out.println("Non ho capito la tua risposta, ma ecco la tua wishlist completa: ");
-				wishlist.sort(String.CASE_INSENSITIVE_ORDER);
-				System.out.println(wishlist);
 				exit = true;
 			}
 			
 		}
 		
 		sc.close();
+		wishlist.sort(String.CASE_INSENSITIVE_ORDER);
+		System.out.println("\nOrdine Alfabetico:\n" + wishlist);
 		
+		wishlist.sort(new StringComparator());
+		System.out.println("\nOrdine per numero di vocali:\n" + wishlist);
 	}
+	
+	public static class StringComparator implements Comparator<String> {
 
+		@Override
+		public int compare(String o1, String o2) {
+			int value1 = 0;
+			int value2 = 0;
+
+			for (int i = 0; i < o1.length(); i++) {
+				if (o1.charAt(i) == 'a' || o1.charAt(i) == 'e' || o1.charAt(i) == 'i' || o1.charAt(i) == 'o'
+						|| o1.charAt(i) == 'u') {
+					value1++;
+				}
+			}
+
+			for (int i = 0; i < o2.length(); i++) {
+				if (o2.charAt(i) == 'a' || o2.charAt(i) == 'e' || o2.charAt(i) == 'i' || o2.charAt(i) == 'o'
+						|| o2.charAt(i) == 'u') {
+					value2++;
+				}
+			}
+
+			return value2 - value1;
+		}
+
+	}
 }
